@@ -1,0 +1,35 @@
+name: Learning Goal
+description: Track a learning objective or skill milestone
+title: "[learn]: "
+labels: ["learning"]
+body:
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Plan Phase
+      options:
+        - Phase 1 - Foundation (Months 1-6)
+        - Phase 2 - Acceleration (Months 7-12)
+        - Phase 3 - Breakout (Months 13-18)
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Learning Goal
+      description: What skill or technology are you learning?
+    validations:
+      required: true
+
+  - type: textarea
+    id: resources
+    attributes:
+      label: Resources
+      description: Documentation, courses, books, or repos you're using
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: How Will You Validate This?
+      description: What will you build or demonstrate to confirm you've learned this?

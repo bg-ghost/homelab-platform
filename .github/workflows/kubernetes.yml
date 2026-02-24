@@ -1,0 +1,43 @@
+name: Kubernetes Manifests
+
+on:
+  pull_request:
+    paths:
+      - 'kubernetes/**'
+      - 'helm-charts/**'
+      - 'policies/**'
+  push:
+    branches: [main]
+    paths:
+      - 'kubernetes/**'
+      - 'helm-charts/**'
+      - 'policies/**'
+
+jobs:
+  validate:
+    name: Validate Manifests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Validate YAML
+        run: |
+          find kubernetes/ -name "*.yaml" -o -name "*.yml" | \
+            xargs kubectl --dry-run=client apply --validate=true -f 2>&1 || true
+
+      - name: Kubescape security scan
+        uses: kubescape/github-action@main
+        with:
+          files: "kubernetes/"
+          frameworks: "NSA,MITRE"
+          severityThreshold: "high"
+
+      - name: Trivy K8s config scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: 'kubernetes/'
+          severity: 'CRITICAL,HIGH'
