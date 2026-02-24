@@ -1,0 +1,29 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+crash.log
+override.tf
+
+# Secrets
+*.key
+*.pem
+kubeconfig
+.vault-token
+secrets.yaml
+
+# Build
+bin/
+dist/
+vendor/
+
+# Editor
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Go
+*.test
+coverage.txt
